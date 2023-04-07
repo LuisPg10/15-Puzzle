@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Luis Pinto">
+
+    <link rel="stylesheet" type="text/css" href="static/styles/style.css">
+    <script src="https://kit.fontawesome.com/d917fbebed.js" crossorigin="anonymous"></script>
+    <title>Puzzle</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="content">
+        <h1> 15 Puzzle</h1>
+        <!-- First row to some game buttons -->
+        <div class="first">
+            <button id="new" class="button">new game</button>
+            <div class="labels">
+                <h3>TIME</h3>
+                <h3>MOVES</h3>
+                <h2><span id="counter">0</span>s</h2>
+                <h2 class="moves">0</h2>
+            </div>
+        </div>
+        <main>
+            <div class="div-overlay">
+                <button id="continue">
+                    <i class="fa-solid fa-play fa-3x" style="color: #5e5c64;"></i>
+                </button>
+            </div>
+            <!-- Board of the game -->
+            <div id="board"></div>
+        </main>
+        <!-- Continue... -->
+        <button id="pause" class="button" disabled>Pause</button>
+        <footer>
+            <p>This game is ispiraded in <a href="https://15puzzle.netlify.app/" target="_blank"> 15 Puzzle</a> and it
+                took as practice for web programming subject</p>
+        </footer>
+    </div>
+    <div class="winner">
+        <div>
+            <h2>Excelent</h2>
+            <p>You won with <span class="moves">0</span> moves</p>
+            <button class="accept button">Ok</button>
+        </div>
+    </div>
+    <script src="logic.js"></script>
+</body>
+
+</html>
