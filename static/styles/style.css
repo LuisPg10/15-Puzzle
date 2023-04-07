@@ -119,6 +119,9 @@ footer {
 a {
     text-decoration: none;
 }
+a:hover {
+    text-decoration: underline;
+}
 
 .winner {
     width: 100%;
