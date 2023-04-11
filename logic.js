@@ -26,6 +26,37 @@ for (let i = 0; i <= 15; i++) {
     square.id = i;
     board.appendChild(square);
 }
+
+function checkMove(e) {
+    let button = e.target;
+    if (button.classList.contains("game-button")) {
+
+        let topButton = document.getElementById(Number(button.id) - 4);
+        let bottomButton = document.getElementById(Number(button.id) + 4);
+        let previousButton = button.previousElementSibling;
+        let nextButton = button.nextElementSibling;
+
+        if (topButton != null) {
+            moveNumber(button, topButton);
+        }
+        if (bottomButton != null) {
+            moveNumber(button, bottomButton);
+        }
+        if (previousButton != null) {
+            if (button.id != 4 && previousButton.id != 3 &&
+                button.id != 8 && previousButton.id != 7 &&
+                button.id != 12 && previousButton.id != 11)
+                moveNumber(button, previousButton);
+        }
+        if (nextButton != null) {
+            if (button.id != 3 && nextButton.id != 4 &&
+                button.id != 7 && nextButton.id != 8 &&
+                button.id != 11 && nextButton.id != 12)
+                moveNumber(button, nextButton);
+        }
+    }
+    e.stopPropagation();   
+}
 //#region functions
 function selectNumber() {
     let randomNumber;
@@ -96,37 +127,8 @@ function activateTimer() {
 //#endregion
 
 //#region events
-board.addEventListener('click', e => {
-
-    let button = e.target;
-    if (button.classList.contains("game-button")) {
-
-        let topButton = document.getElementById(Number(button.id) - 4);
-        let bottomButton = document.getElementById(Number(button.id) + 4);
-        let previousButton = button.previousElementSibling;
-        let nextButton = button.nextElementSibling;
-
-        if (topButton != null) {
-            moveNumber(button, topButton);
-        }
-        if (bottomButton != null) {
-            moveNumber(button, bottomButton);
-        }
-        if (previousButton != null) {
-            if (button.id != 4 && previousButton.id != 3 &&
-                button.id != 8 && previousButton.id != 7 &&
-                button.id != 12 && previousButton.id != 11)
-                moveNumber(button, previousButton);
-        }
-        if (nextButton != null) {
-            if (button.id != 3 && nextButton.id != 4 &&
-                button.id != 7 && nextButton.id != 8 &&
-                button.id != 11 && nextButton.id != 12)
-                moveNumber(button, nextButton);
-        }
-    }
-    e.stopPropagation();
-});
+board.addEventListener('click', e => checkMove(e));
+board.addEventListener('touchmove', e => checkMove(e));
 
 reload.addEventListener('click', () => {
 

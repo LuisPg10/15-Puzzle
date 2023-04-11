@@ -226,8 +226,8 @@ a:hover {
 }
 
 @media (hover: none) {
-  .button:hover {
-    background-color: initial;
-    color: initial;
+  .button:not(:disabled):hover {
+    background-color: #fff;
+    color: #000;
   }
 }
