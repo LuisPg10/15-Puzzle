@@ -11,22 +11,10 @@ const winner = document.querySelector(".winner");
 let timer, win;
 let move = 0;
 const numbers = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  "7",
-  "8",
-  "9",
-  "10",
-  "11",
-  "12",
-  "13",
-  "14",
-  "15",
-  "",
+  "1", "2", "3", "4", 
+  "5", "6", "7", "8", 
+  "9", "10", "11", "12", 
+  "13", "14", "15", "",
 ];
 let usedNumbers = [];
 let time = 0;
@@ -112,9 +100,8 @@ function activateTimer() {
 //#region events
 
 //Event click in game-buttons
-let button;
 board.addEventListener("click", (e) => {
-  button = e.target;
+  let button = e.target;
   if (button.classList.contains("game-button")) {
 
     let topButton = document.getElementById(Number(button.id) - 4);
@@ -130,23 +117,17 @@ board.addEventListener("click", (e) => {
     }
     if (previousButton != null) {
       if (
-        button.id != 4 &&
-        previousButton.id != 3 &&
-        button.id != 8 &&
-        previousButton.id != 7 &&
-        button.id != 12 &&
-        previousButton.id != 11
+        button.id != 4 && previousButton.id != 3 &&
+        button.id != 8 && previousButton.id != 7 &&
+        button.id != 12 && previousButton.id != 11
       )
         moveNumber(button, previousButton);
     }
     if (nextButton != null) {
       if (
-        button.id != 3 &&
-        nextButton.id != 4 &&
-        button.id != 7 &&
-        nextButton.id != 8 &&
-        button.id != 11 &&
-        nextButton.id != 12
+        button.id != 3 && nextButton.id != 4 &&
+        button.id != 7 && nextButton.id != 8 &&
+        button.id != 11 && nextButton.id != 12
       )
         moveNumber(button, nextButton);
     }
@@ -154,59 +135,9 @@ board.addEventListener("click", (e) => {
   e.stopPropagation();
 });
 
-//Touch funtions
-let initTouchX, initTouchY;
-board.addEventListener("touchstart", (e) => {
-  initTouchX = e.touches[0].clientX;
-  initTouchY = e.touches[0].clientY;
-});
-
-board.addEventListener("touchmove", (e) => {
-  button = e.target;
-  let dX = initTouchX - e.touches[0].clientX;
-  let dY = initTouchY - e.touches[0].clientY;
-
-  if (button.classList.contains("game-button")) {
-
-    let topButton = document.getElementById(Number(button.id) - 4);
-    let bottomButton = document.getElementById(Number(button.id) + 4);
-    let previousButton = button.previousElementSibling;
-    let nextButton = button.nextElementSibling;
-
-    if (topButton != null && dY > 0) {
-      moveNumber(button, topButton);
-    }
-    if (bottomButton != null && dY < 0) {
-      moveNumber(button, bottomButton);
-    }
-    if (previousButton != null && dX > 0) {
-      if (
-        button.id != 4 &&
-        previousButton.id != 3 &&
-        button.id != 8 &&
-        previousButton.id != 7 &&
-        button.id != 12 &&
-        previousButton.id != 11
-      )
-        moveNumber(button, previousButton);
-    }
-    if (nextButton != null && dX < 0) {
-      if (
-        button.id != 3 &&
-        nextButton.id != 4 &&
-        button.id != 7 &&
-        nextButton.id != 8 &&
-        button.id != 11 &&
-        nextButton.id != 12
-      )
-        moveNumber(button, nextButton);
-    }
-  }
-  e.stopPropagation();
-});
-
-//Funtions like reload game, pause game and show winner or pause div
+//Events like reload game, pause game and show winner or pause div
 reload.addEventListener("click", () => {
+
   if (move != 0) {
     if (timer != null) clearInterval(timer);
     time = 0;
@@ -214,11 +145,13 @@ reload.addEventListener("click", () => {
     move = 0;
     moves[0].textContent = move;
   }
+
   if (!pause.disabled) {
     pause.textContent = "Pause";
     pause.disabled = true;
     pause.style.cursor = "not-allowed";
   }
+  
   if ((divOverlay.style.visibility = "visible")) {
     divOverlay.style.visibility = "hidden";
   }
