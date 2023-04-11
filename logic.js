@@ -11,185 +11,258 @@ const winner = document.querySelector(".winner");
 let timer, win;
 let move = 0;
 const numbers = [
-    '1', '2', '3', '4',
-    '5', '6', '7', '8',
-    '9', '10', '11', '12',
-    '13', '14', '15', ''
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "",
 ];
 let usedNumbers = [];
 let time = 0;
 
 //Creating buttons to game
 for (let i = 0; i <= 15; i++) {
-    let square = document.createElement("div");
-    square.classList.add("game-button");
-    square.id = i;
-    board.appendChild(square);
+  let square = document.createElement("div");
+  square.classList.add("game-button");
+  square.id = i;
+  board.appendChild(square);
 }
 
-function checkMove(e) {
-    let button = e.target;
-    if (button.classList.contains("game-button")) {
-
-        let topButton = document.getElementById(Number(button.id) - 4);
-        let bottomButton = document.getElementById(Number(button.id) + 4);
-        let previousButton = button.previousElementSibling;
-        let nextButton = button.nextElementSibling;
-
-        if (topButton != null) {
-            moveNumber(button, topButton);
-        }
-        if (bottomButton != null) {
-            moveNumber(button, bottomButton);
-        }
-        if (previousButton != null) {
-            if (button.id != 4 && previousButton.id != 3 &&
-                button.id != 8 && previousButton.id != 7 &&
-                button.id != 12 && previousButton.id != 11)
-                moveNumber(button, previousButton);
-        }
-        if (nextButton != null) {
-            if (button.id != 3 && nextButton.id != 4 &&
-                button.id != 7 && nextButton.id != 8 &&
-                button.id != 11 && nextButton.id != 12)
-                moveNumber(button, nextButton);
-        }
-    }
-    e.stopPropagation();   
-}
 //#region functions
 function selectNumber() {
-    let randomNumber;
-    do {
-        randomNumber = Math.floor(Math.random() * 16);
-    } while (usedNumbers.includes(numbers[randomNumber]));
+  let randomNumber;
+  do {
+    randomNumber = Math.floor(Math.random() * 16);
+  } while (usedNumbers.includes(numbers[randomNumber]));
 
-    usedNumbers.push(numbers[randomNumber]);
-    return numbers[randomNumber];
+  usedNumbers.push(numbers[randomNumber]);
+  return numbers[randomNumber];
 }
 
 function moveNumber(pressElement, element) {
-    if (element.textContent == '') {
-        element.textContent = pressElement.textContent;
-        pressElement.textContent = '';
-        if (move == 0) {
-            activateTimer();
-            pause.disabled = false;
-            pause.style.cursor = "pointer";
-        }
-        move++;
-        moves[0].textContent = move;
+  if (element.textContent == "") {
+    element.textContent = pressElement.textContent;
+    pressElement.textContent = "";
 
-        if (element.id == Number(element.textContent) - 1) {
-            element.style.backgroundColor = "orange";
-            win++;
-        }
-        else if (pressElement.style.backgroundColor == "orange") {
-            pressElement.style.backgroundColor = "white";
-            win--;
-        }
-
-        if (win == 15) {
-            clearInterval(timer);
-            moves[1].textContent = move;
-            winner.style.visibility = "visible";
-        }
+    if (move == 0) {
+      activateTimer();
+      pause.disabled = false;
+      pause.style.cursor = "pointer";
     }
+    move++;
+    moves[0].textContent = move;
+
+    if (element.id == Number(element.textContent) - 1) {
+      element.style.backgroundColor = "orange";
+      win++;
+    } else if (pressElement.style.backgroundColor == "orange") {
+      pressElement.style.backgroundColor = "white";
+      win--;
+    }
+
+    if (win == 15) {
+      clearInterval(timer);
+      moves[1].textContent = move;
+      winner.style.visibility = "visible";
+    }
+  }
 }
 
 function fillSquares() {
-    win = 0;
-    usedNumbers.splice(0, usedNumbers.length);
-    for (let i = 0; i <= 15; i++) {
-        let element = board.children[i];
-        element.textContent = selectNumber();
+  win = 0;
+  usedNumbers.splice(0, usedNumbers.length);
 
-        if (element.id == Number(element.textContent) - 1) {
-            element.style.backgroundColor = "orange";
-            win++;
-        }
-        else {
-            element.style.backgroundColor = "white";
-        }
+  for (let i = 0; i <= 15; i++) {
+    let element = board.children[i];
+    element.textContent = selectNumber();
+
+    if (element.id == Number(element.textContent) - 1) {
+      element.style.backgroundColor = "orange";
+      win++;
+    } else {
+      element.style.backgroundColor = "white";
     }
-    if (win == 15) {
-        fillSquares();
-    }
+  }
+
+  if (win == 15) {
+    fillSquares();
+  }
 }
 fillSquares();
 
 function activateTimer() {
-    timer = setInterval(() => {
-        time++;
-        counter.textContent = time;
-    }, 1000);
+  timer = setInterval(() => {
+    time++;
+    counter.textContent = time;
+  }, 1000);
 }
 //#endregion
 
 //#region events
-board.addEventListener('click', e => checkMove(e));
-board.addEventListener('touchmove', e => checkMove(e));
 
-reload.addEventListener('click', () => {
+//Event click in game-buttons
+let button;
+board.addEventListener("click", (e) => {
+  button = e.target;
+  if (button.classList.contains("game-button")) {
 
-    if (move != 0) {
-        if (timer != null)
-            clearInterval(timer);
-        time = 0;
-        counter.textContent = time;
-        move = 0;
-        moves[0].textContent = move;
+    let topButton = document.getElementById(Number(button.id) - 4);
+    let bottomButton = document.getElementById(Number(button.id) + 4);
+    let previousButton = button.previousElementSibling;
+    let nextButton = button.nextElementSibling;
+
+    if (topButton != null) {
+      moveNumber(button, topButton);
     }
-    if (!pause.disabled) {
-        pause.textContent = "Pause";
-        pause.disabled = true;
-        pause.style.cursor = "not-allowed";
+    if (bottomButton != null) {
+      moveNumber(button, bottomButton);
     }
-    if (divOverlay.style.visibility = "visible") {
-        divOverlay.style.visibility = "hidden";
+    if (previousButton != null) {
+      if (
+        button.id != 4 &&
+        previousButton.id != 3 &&
+        button.id != 8 &&
+        previousButton.id != 7 &&
+        button.id != 12 &&
+        previousButton.id != 11
+      )
+        moveNumber(button, previousButton);
     }
-    fillSquares();
+    if (nextButton != null) {
+      if (
+        button.id != 3 &&
+        nextButton.id != 4 &&
+        button.id != 7 &&
+        nextButton.id != 8 &&
+        button.id != 11 &&
+        nextButton.id != 12
+      )
+        moveNumber(button, nextButton);
+    }
+  }
+  e.stopPropagation();
 });
 
-pause.addEventListener('click', () => {
-
-    if (pause.textContent == "Pause") {
-        clearInterval(timer);
-        divOverlay.style.visibility = "visible";
-        pause.textContent = "Play";
-    } else {
-        activateTimer();
-        divOverlay.style.visibility = "hidden";
-        pause.textContent = "Pause";
-    }
+//Touch funtions
+let initTouchX, initTouchY;
+board.addEventListener("touchstart", (e) => {
+  initTouchX = e.touches[0].clientX;
+  initTouchY = e.touches[0].clientY;
 });
 
-divOverlay.addEventListener('click', e => {
-    if (e.target.id == "continue" || e.target.classList.contains("fa-play")) {
-        activateTimer();
-        divOverlay.style.visibility = "hidden";
-        pause.textContent = "Pause";
+board.addEventListener("touchmove", (e) => {
+  button = e.target;
+  let dX = initTouchX - e.touches[0].clientX;
+  let dY = initTouchY - e.touches[0].clientY;
+
+  if (button.classList.contains("game-button")) {
+
+    let topButton = document.getElementById(Number(button.id) - 4);
+    let bottomButton = document.getElementById(Number(button.id) + 4);
+    let previousButton = button.previousElementSibling;
+    let nextButton = button.nextElementSibling;
+
+    if (topButton != null && dY > 0) {
+      moveNumber(button, topButton);
     }
-    e.stopPropagation();
+    if (bottomButton != null && dY < 0) {
+      moveNumber(button, bottomButton);
+    }
+    if (previousButton != null && dX > 0) {
+      if (
+        button.id != 4 &&
+        previousButton.id != 3 &&
+        button.id != 8 &&
+        previousButton.id != 7 &&
+        button.id != 12 &&
+        previousButton.id != 11
+      )
+        moveNumber(button, previousButton);
+    }
+    if (nextButton != null && dX < 0) {
+      if (
+        button.id != 3 &&
+        nextButton.id != 4 &&
+        button.id != 7 &&
+        nextButton.id != 8 &&
+        button.id != 11 &&
+        nextButton.id != 12
+      )
+        moveNumber(button, nextButton);
+    }
+  }
+  e.stopPropagation();
 });
 
-winner.addEventListener('click', e => {
-    if (e.target.classList.contains("accept")) {
-        winner.style.visibility = "hidden";
-        time = 0;
-        counter.textContent = time;
-        move = 0;
-        moves[0].textContent = move;
-        pause.disabled = true;
-        pause.style.cursor = "not-allowed";
-        fillSquares();
-    }
-    e.stopPropagation();
-});
-
-window.addEventListener('load', function () {
+//Funtions like reload game, pause game and show winner or pause div
+reload.addEventListener("click", () => {
+  if (move != 0) {
+    if (timer != null) clearInterval(timer);
+    time = 0;
+    counter.textContent = time;
+    move = 0;
+    moves[0].textContent = move;
+  }
+  if (!pause.disabled) {
+    pause.textContent = "Pause";
     pause.disabled = true;
     pause.style.cursor = "not-allowed";
+  }
+  if ((divOverlay.style.visibility = "visible")) {
+    divOverlay.style.visibility = "hidden";
+  }
+  fillSquares();
+});
+
+pause.addEventListener("click", () => {
+  if (pause.textContent == "Pause") {
+    clearInterval(timer);
+    divOverlay.style.visibility = "visible";
+    pause.textContent = "Play";
+  } else {
+    activateTimer();
+    divOverlay.style.visibility = "hidden";
+    pause.textContent = "Pause";
+  }
+});
+
+divOverlay.addEventListener("click", (e) => {
+  if (e.target.id == "continue" || e.target.classList.contains("fa-play")) {
+    activateTimer();
+    divOverlay.style.visibility = "hidden";
+    pause.textContent = "Pause";
+  }
+  e.stopPropagation();
+});
+
+winner.addEventListener("click", (e) => {
+  if (e.target.classList.contains("accept")) {
+    winner.style.visibility = "hidden";
+    time = 0;
+    counter.textContent = time;
+    move = 0;
+    moves[0].textContent = move;
+    pause.disabled = true;
+    pause.style.cursor = "not-allowed";
+    fillSquares();
+  }
+  e.stopPropagation();
+});
+
+window.addEventListener("load", function () {
+  pause.disabled = true;
+  pause.style.cursor = "not-allowed";
 });
 
 //#endregion
