@@ -1,0 +1,52 @@
+#board {
+  border-radius: 12px;
+  display: grid;
+  font-family: 'Montserrat', sans-serif;
+  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 10px;
+  z-index: 30;
+}
+
+#board .game-button {
+  background-color: white;
+  border-radius: 12px;
+  height: 110px;
+  width: 110px;
+
+  display: flex;
+  /* horizontal centering*/
+  justify-content: center;
+  /* vertical centering*/
+  align-items: center;
+  font-size: 50px;
+}
+
+.div-overlay {
+  visibility: hidden;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 12px;
+  display: flex;
+  height: 520px;
+  justify-content: center;
+  position: absolute;
+  width: 520px;
+  z-index: 40;
+}
+
+#continue {
+  font-weight: bold;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+}
+
+#pause {
+  width: 500px;
+  height: 58px;
+  margin: 30px auto 0 auto;
+  cursor: not-allowed;
+}
