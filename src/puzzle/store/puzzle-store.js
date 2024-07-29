@@ -29,7 +29,6 @@ let timer;
  *
  * @param {Boolean|undefined} run
  * @param {() => void} callback
- * @returns {void}
  */
 const runTime = (run = true, callback = undefined) => {
   if (run) {
