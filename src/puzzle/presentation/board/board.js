@@ -22,7 +22,7 @@ let numberPanel;
 /**
  * @type {HTMLButtonElement}
  */
-let pauseButton, pauseFaButton;
+let pauseButton;
 
 /**
  * Render the board element
@@ -37,7 +37,7 @@ export const board = (element) => {
 
   numberPanel = document.querySelector(elementsId.Board);
   pauseButton = document.querySelector(elementsId.Pause);
-  pauseFaButton = document.querySelector(elementsId.PauseFaButton);
+  const pauseFaButton = document.querySelector(elementsId.PauseFaButton);
 
   renderSquares();
 
