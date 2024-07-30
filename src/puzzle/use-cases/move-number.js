@@ -1,4 +1,5 @@
-import { renderMoves } from '../presentation/game-info/game-info';
+import { renderMoves, renderTime } from '../presentation/game-info/game-info';
+import { togglePause } from '../presentation/board/board';
 import puzzleStore from '../store/puzzle-store';
 
 /**
@@ -32,5 +33,10 @@ export const moveNumber = (square, emptySquare) => {
 
     puzzleStore.updateMovesCount();
     renderMoves();
+
+    if (puzzleStore.getMoves() === 1) {
+      puzzleStore.runTime(true, renderTime);
+      togglePause();
+    }
   }
 };

@@ -60,11 +60,6 @@ const moveEventListener = (event) => {
 
   moveNumber(square, emptySquare);
 
-  if (puzzleStore.getMoves() === 1) {
-    puzzleStore.runTime(true, renderTime);
-    togglePause();
-  }
-
   if (puzzleStore.getWonGame()) {
     puzzleStore.runTime(false);
     const main = numberPanel.parentElement;
