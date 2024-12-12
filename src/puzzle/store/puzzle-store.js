@@ -5,6 +5,7 @@ const state = {
   moves: 0,
   numbers: [],
   playedTime: 0,
+  pauseState: false,
   wonGame: false,
 };
 
@@ -39,6 +40,14 @@ const runTime = (run = true, callback = undefined) => {
     return;
   }
   clearInterval(timer);
+};
+
+/**
+ *
+ * @param {Boolean} paused
+ */
+const changePauseState = (paused) => {
+  state.pauseState = paused;
 };
 
 const updateMovesCount = () => {
@@ -79,8 +88,15 @@ export default {
    *
    * @returns {Boolean}
    */
+  getPauseState: () => state.pauseState,
+
+  /**
+   *
+   * @returns {Boolean}
+   */
   getWonGame: () => state.wonGame,
 
+  changePauseState,
   decreaseCorrectCount,
   increaseCorrectCount,
   newGame,

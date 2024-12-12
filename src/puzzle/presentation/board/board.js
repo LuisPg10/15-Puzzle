@@ -74,16 +74,18 @@ let divOverlay;
 const pauseEventListener = () => {
   if (!divOverlay) divOverlay = document.querySelector(elementsId.DivOverlay);
 
-  if (pauseButton.innerHTML === 'Pause') {
+  if (!puzzleStore.getPauseState()) {
     pauseButton.innerHTML = 'Play';
     divOverlay.style.visibility = 'visible';
     puzzleStore.runTime(false);
+    puzzleStore.changePauseState(true);
     return;
   }
 
   pauseButton.innerHTML = 'Pause';
   divOverlay.style.visibility = 'hidden';
   puzzleStore.runTime(true, renderTime);
+  puzzleStore.changePauseState(false);
 };
 
 export const renderSquares = () => {
@@ -114,8 +116,9 @@ export const togglePause = () => {
     ? (pauseButton.style.cursor = 'not-allowed')
     : (pauseButton.style.cursor = 'pointer');
 
-  if (pauseButton.innerHTML === 'Play') {
+  if (puzzleStore.getPauseState()) {
     pauseButton.innerHTML = 'Pause';
     divOverlay.style.visibility = 'hidden';
+    puzzleStore.changePauseState(false);
   }
 };
