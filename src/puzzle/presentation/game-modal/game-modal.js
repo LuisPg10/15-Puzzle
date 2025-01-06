@@ -20,7 +20,7 @@ export const gameModal = (element) => {
     <div>
       <h2>Excelent</h2>
       <p>You won with ${puzzleStore.getMoves()} moves</p>
-      <button class="accept button">Play again</button>
+      <button class="accept">Play again</button>
     </div>
   `;
 

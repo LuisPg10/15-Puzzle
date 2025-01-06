@@ -6,9 +6,8 @@ import { moveNumber } from '../../use-cases/index';
 import { renderTime } from '../game-info/game-info';
 import { gameModal } from '../game-modal/game-modal';
 
-const elementsId = {
+const elementsSlt = {
   Board: '#board',
-  GameButton: '.game-button',
   Pause: '#pause',
   DivOverlay: '.div-overlay',
   PauseFaButton: '#continue',
@@ -31,18 +30,17 @@ let pauseButton;
 export const board = (element) => {
   if (!element) throw new Error('element not found');
 
-  const mainContent = document.createElement('main');
+  const mainContent = document.createElement('section');
+  mainContent.classList.add('game-board');
   mainContent.innerHTML = html;
   element.append(mainContent);
 
-  numberPanel = document.querySelector(elementsId.Board);
-  pauseButton = document.querySelector(elementsId.Pause);
-  const pauseFaButton = document.querySelector(elementsId.PauseFaButton);
+  numberPanel = document.querySelector(elementsSlt.Board);
+  const pauseFaButton = document.querySelector(elementsSlt.PauseFaButton);
 
   renderSquares();
 
   numberPanel.addEventListener('click', moveEventListener);
-  pauseButton.addEventListener('click', pauseEventListener);
   pauseFaButton.addEventListener('click', pauseEventListener);
 };
 
@@ -51,7 +49,7 @@ export const board = (element) => {
  * @param {MouseEvent} event
  */
 const moveEventListener = (event) => {
-  const square = event.target.closest(elementsId.GameButton);
+  const square = event.target.closest('div');
   if (!square) return;
 
   const emptySquare = [...numberPanel.children].find(
@@ -72,18 +70,18 @@ const moveEventListener = (event) => {
  */
 let divOverlay;
 const pauseEventListener = () => {
-  if (!divOverlay) divOverlay = document.querySelector(elementsId.DivOverlay);
+  if (!divOverlay) divOverlay = document.querySelector(elementsSlt.DivOverlay);
 
   if (!puzzleStore.getPauseState()) {
     pauseButton.innerHTML = 'Play';
-    divOverlay.style.visibility = 'visible';
+    divOverlay.hidden = false;
     puzzleStore.runTime(false);
     puzzleStore.changePauseState(true);
     return;
   }
 
   pauseButton.innerHTML = 'Pause';
-  divOverlay.style.visibility = 'hidden';
+  divOverlay.hidden = true;
   puzzleStore.runTime(true, renderTime);
   puzzleStore.changePauseState(false);
 };
@@ -96,7 +94,6 @@ export const renderSquares = () => {
 
     if (!square) {
       square = document.createElement('div');
-      square.classList.add('game-button');
       square.dataset.id = index;
       numberPanel.append(square);
     }
@@ -118,7 +115,7 @@ export const togglePause = () => {
 
   if (puzzleStore.getPauseState()) {
     pauseButton.innerHTML = 'Pause';
-    divOverlay.style.visibility = 'hidden';
+    divOverlay.hidden = true;
     puzzleStore.changePauseState(false);
   }
 };

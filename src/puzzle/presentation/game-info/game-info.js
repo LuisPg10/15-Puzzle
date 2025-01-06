@@ -10,15 +10,15 @@ const elementsId = {
 
 /**
  *
- * @param {HTMLDivElement} element
+ * @param {HTMLElement} element
  */
 export const gameInfo = (element) => {
   if (!element) throw new Error('element not found');
 
-  const info = document.createElement('div');
+  const info = document.createElement('section');
   info.classList.add('game-info');
   info.innerHTML = `
-    <button id="new" class="button">new game</button>
+    <button id="new">new game</button>
     <div class="labels">
       <h3>TIME</h3>
       <h3>MOVES</h3>

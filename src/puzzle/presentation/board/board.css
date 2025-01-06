@@ -1,52 +1,40 @@
-#board {
-  border-radius: 12px;
+.game-board {
   display: grid;
-  font-family: 'Montserrat', sans-serif;
-  gap: 20px;
-  grid-template-columns: repeat(4, 1fr);
-  margin: 10px;
-  z-index: 30;
+  row-gap: 30px;
+  position: relative;
 }
 
-#board .game-button {
-  background-color: white;
-  border-radius: 12px;
-  height: 110px;
-  width: 110px;
+#board {
+  font-family: Montserrat, sans-serif;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
 
-  display: flex;
-  /* horizontal centering*/
-  justify-content: center;
-  /* vertical centering*/
-  align-items: center;
-  font-size: 50px;
+  div {
+    border-radius: 12px;
+    font-size: 3.125em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 .div-overlay {
-  visibility: hidden;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 12px;
-  display: flex;
-  height: 520px;
-  justify-content: center;
   position: absolute;
-  width: 520px;
-  z-index: 40;
-}
+  inset: -10px;
 
-#continue {
-  font-weight: bold;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-}
+  button {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    position: absolute;
+    inset: 0;
+    margin: auto;
+  }
 
-#pause {
-  width: 500px;
-  height: 58px;
-  margin: 30px auto 0 auto;
-  cursor: not-allowed;
+  button:hover {
+    background: buttonface;
+  }
 }
