@@ -2,7 +2,7 @@ import './game-modal.css';
 import { newGameEventListener } from '../game-info/game-info';
 import puzzleStore from '../../store/puzzle-store';
 
-const elementsId = {
+const elementsClassIds = {
   Accept: '.accept',
 };
 
@@ -27,7 +27,7 @@ export const gameModal = (element) => {
   dialog.innerHTML = message;
   element.append(dialog);
 
-  const playAgain = document.querySelector(elementsId.Accept);
+  const playAgain = document.querySelector(elementsClassIds.Accept);
   playAgain.addEventListener('click', () => {
     newGameEventListener();
     dialog.remove();

@@ -47,6 +47,13 @@ footer {
   text-align: center;
 }
 
+a {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 @media (width < 530px) {
   html {
     font-size: 12px;

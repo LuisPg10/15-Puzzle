@@ -1,10 +1,9 @@
 .game-board {
-  display: grid;
-  row-gap: 30px;
   position: relative;
 }
 
 #board {
+  height: 100%;
   font-family: Montserrat, sans-serif;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -35,6 +34,6 @@
   }
 
   button:hover {
-    background: buttonface;
+    background: white;
   }
 }
