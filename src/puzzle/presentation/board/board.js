@@ -2,26 +2,19 @@ import html from './board.html?raw';
 import './board.css';
 
 import puzzleStore from '../../store/puzzle-store';
-import { moveNumber } from '../../use-cases/index';
-import { renderTime } from '../game-info/game-info';
-import { gameModal } from '../game-modal/game-modal';
+import { moveNumber } from '../../use-cases';
+import { gameModal, pauseEventListener } from '../';
 
-const elementsSlt = {
+const elementsId = {
   Board: '#board',
   Pause: '#pause',
-  DivOverlay: '.div-overlay',
   PauseFaButton: '#continue',
 };
 
 /**
  * @type {HTMLDivElement}
  */
-let numberPanel;
-
-/**
- * @type {HTMLButtonElement}
- */
-let pauseButton;
+export let numberPanel;
 
 /**
  * Render the board element
@@ -35,8 +28,8 @@ export const board = (element) => {
   mainContent.innerHTML = html;
   element.append(mainContent);
 
-  numberPanel = document.querySelector(elementsSlt.Board);
-  const pauseFaButton = document.querySelector(elementsSlt.PauseFaButton);
+  numberPanel = document.querySelector(elementsId.Board);
+  const pauseFaButton = document.querySelector(elementsId.PauseFaButton);
 
   renderSquares();
 
@@ -57,33 +50,12 @@ const moveEventListener = (event) => {
   );
 
   moveNumber(square, emptySquare);
+  puzzleStore.runTime(false);
 
   if (puzzleStore.getWonGame()) {
-    puzzleStore.runTime(false);
     const main = numberPanel.parentElement;
     gameModal(main.parentElement);
   }
-};
-
-/**
- * @type {HTMLDivElement}
- */
-let divOverlay;
-const pauseEventListener = () => {
-  if (!divOverlay) divOverlay = document.querySelector(elementsSlt.DivOverlay);
-
-  if (!puzzleStore.getPauseState()) {
-    pauseButton.innerHTML = 'Play';
-    divOverlay.hidden = false;
-    puzzleStore.runTime(false);
-    puzzleStore.changePauseState(true);
-    return;
-  }
-
-  pauseButton.innerHTML = 'Pause';
-  divOverlay.hidden = true;
-  puzzleStore.runTime(true, renderTime);
-  puzzleStore.changePauseState(false);
 };
 
 export const renderSquares = () => {
@@ -105,17 +77,4 @@ export const renderSquares = () => {
       square.style.backgroundColor = 'white';
     }
   });
-};
-
-export const togglePause = () => {
-  pauseButton.disabled = !pauseButton.disabled;
-  pauseButton.disabled
-    ? (pauseButton.style.cursor = 'not-allowed')
-    : (pauseButton.style.cursor = 'pointer');
-
-  if (puzzleStore.getPauseState()) {
-    pauseButton.innerHTML = 'Pause';
-    divOverlay.hidden = true;
-    puzzleStore.changePauseState(false);
-  }
 };

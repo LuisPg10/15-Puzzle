@@ -1,5 +1,5 @@
 import { renderMoves, renderTime } from '../presentation/game-info/game-info';
-import { togglePause } from '../presentation/board/board';
+import { togglePause } from '../presentation';
 import puzzleStore from '../store/puzzle-store';
 
 /**

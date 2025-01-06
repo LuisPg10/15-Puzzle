@@ -1,3 +1,4 @@
-export { board } from './board/board';
-export { gameInfo } from './game-info/game-info';
-export { gameModal } from './game-modal/game-modal';
+export * from './board/board';
+export * from './game-info/game-info';
+export * from './game-modal/game-modal';
+export * from './pause-button/pause-button';

@@ -1,10 +1,5 @@
-import { gameInfo, board } from './presentation';
+import { gameInfo, board, pauseButton } from './presentation';
 import puzzleStore from './store/puzzle-store';
-
-/**
- * @type {HTMLButtonElement}
- */
-let pauseButton;
 
 /**
  *
@@ -25,12 +20,7 @@ export const PuzzleApp = (element) => {
   element.append(main);
   gameInfo(main);
   board(main);
-
-  pauseButton = document.createElement('button');
-  pauseButton.id = 'pause';
-  pauseButton.disabled = true;
-  pauseButton.innerHTML = 'Pause';
-  main.append(pauseButton);
+  pauseButton(main);
 
   // footer
   const footer = document.createElement('footer');

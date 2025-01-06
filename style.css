@@ -29,6 +29,7 @@ button {
   border-radius: 12px;
   font-size: 1.25em;
   font-weight: bold;
+  cursor: pointer;
 }
 
 button:not(:disabled):hover {

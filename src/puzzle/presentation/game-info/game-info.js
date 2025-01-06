@@ -1,6 +1,6 @@
 import './game-info.css';
 import puzzleStore from '../../store/puzzle-store';
-import { renderSquares, togglePause } from '../board/board';
+import { renderSquares, togglePause } from '../';
 
 const elementsId = {
   NewButton: '#new',
